@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planning - Plan Your Perfect Meals</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <img src="images/logo.jpg" alt="Logo" class="logo" onclick="location.href='index.html';">
+                <div class="nav-links">
+                    <h3 class="nav-item" onclick="location.href='menu.html';">Menu</h3>
+                    <h3 class="nav-item" onclick="location.href='mealPlanning.html';">Meal Planning</h3>
+                </div>
+            </div>
+            <div class="nav-right">
+                <h3 class="nav-item" onclick="location.href='profile.html';">Profile</h3>
+                <h3 class="nav-item" onclick="location.href='login.html';">Sign In</h3>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1 class="hero-title">Personalized Meal Planning</h1>
+        <p class="hero-description">Craft your weekly meals with ease, balancing health, time, and taste!</p>
+        <button class="ai-suggestion-btn" onclick="getAISuggestions()">🧠 Get AI Meal Plan</button>
+        <button class="custom-meal-plan-btn" onclick="createCustomMealPlan()">🎯 Create Custom Plan</button>
+    </section>
+
+    <!-- Day Selection -->
+    <section class="day-selection">
+        <h2>Select a Day for Meal Planning</h2>
+        <div class="days-grid">
+            <button class="day-btn" onclick="selectDay('monday')">Monday</button>
+            <button class="day-btn" onclick="selectDay('tuesday')">Tuesday</button>
+            <button class="day-btn" onclick="selectDay('wednesday')">Wednesday</button>
+            <button class="day-btn" onclick="selectDay('thursday')">Thursday</button>
+            <button class="day-btn" onclick="selectDay('friday')">Friday</button>
+            <button class="day-btn" onclick="selectDay('saturday')">Saturday</button>
+            <button class="day-btn" onclick="selectDay('sunday')">Sunday</button>
+        </div>
+    </section>
+
+    <!-- Meal Plan Section -->
+    <section class="meal-plan-section">
+        <h2>Planned Meals for <span id="selectedDay">Monday</span></h2>
+        <div class="meal-grid">
+            <div class="meal-card">
+                <h3>Breakfast</h3>
+                <div class="meal-details" id="breakfastDetails"></div>
+                <button onclick="addMeal('breakfast')">+ Add Breakfast</button>
+            </div>
+            <div class="meal-card">
+                <h3>Lunch</h3>
+                <div class="meal-details" id="lunchDetails"></div>
+                <button onclick="addMeal('lunch')">+ Add Lunch</button>
+            </div>
+            <div class="meal-card">
+                <h3>Dinner</h3>
+                <div class="meal-details" id="dinnerDetails"></div>
+                <button onclick="addMeal('dinner')">+ Add Dinner</button>
+            </div>
+        </div>
+        <button class="generate-shopping-list-btn" onclick="generateShoppingList()">🛒 Generate Shopping List</button>
+    </section>
+
+    <!-- Meal Plan Templates -->
+    <section class="meal-plan-templates">
+        <h2>Meal Plan Templates</h2>
+        <div class="template-grid">
+            <div class="template-card" onclick="applyTemplate('balanced')">
+                <h3>Balanced Diet</h3>
+                <p>A perfect balance of carbs, proteins, and fats for each day.</p>
+            </div>
+            <div class="template-card" onclick="applyTemplate('vegetarian')">
+                <h3>Vegetarian Plan</h3>
+                <p>A variety of delicious and nutritious vegetarian meals.</p>
+            </div>
+            <div class="template-card" onclick="applyTemplate('keto')">
+                <h3>Keto Diet</h3>
+                <p>Low carb, high fat meals for ketogenic diet followers.</p>
+            </div>
+            <div class="template-card" onclick="applyTemplate('family')">
+                <h3>Family Plan</h3>
+                <p>Meals that the whole family will love.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Recipes Section -->
+    <section class="custom-recipes-section">
+        <h2>Create a Custom Recipe</h2>
+        <form id="recipeForm" onsubmit="submitRecipe(event)">
+            <input type="text" id="recipeName" placeholder="Recipe Name" required>
+            <textarea id="recipeInstructions" placeholder="Recipe Instructions" required></textarea>
+            <button type="submit">Submit Recipe</button>
+        </form>
+    </section>
+
+    <!-- Shopping List Section -->
+    <section class="shopping-list-section">
+        <h2>Shopping List</h2>
+        <ul id="shoppingList"></ul>
+        <button class="clear-list-btn" onclick="clearShoppingList()">Clear List</button>
+    </section>
+
+    <!-- Save and Export Plan -->
+    <section class="save-export-plan">
+        <h2>Save or Export Meal Plan</h2>
+        <button onclick="saveMealPlan()">💾 Save Plan</button>
+        <button onclick="exportMealPlan()">📄 Export to PDF</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Meal Planner. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        let selectedDay = 'monday';
+        let mealPlans = {
+            monday: { breakfast: '', lunch: '', dinner: '' },
+            tuesday: { breakfast: '', lunch: '', dinner: '' },
+            wednesday: { breakfast: '', lunch: '', dinner: '' },
+            thursday: { breakfast: '', lunch: '', dinner: '' },
+            friday: { breakfast: '', lunch: '', dinner: '' },
+            saturday: { breakfast: '', lunch: '', dinner: '' },
+            sunday: { breakfast: '', lunch: '', dinner: '' }
+        };
+
+        function selectDay(day) {
+            selectedDay = day;
+            document.getElementById('selectedDay').textContent = capitalize(day);
+            loadMealPlan(day);
+        }
+
+        function loadMealPlan(day) {
+            document.getElementById('breakfastDetails').textContent = mealPlans[day].breakfast || 'No meal added';
+            document.getElementById('lunchDetails').textContent = mealPlans[day].lunch || 'No meal added';
+            document.getElementById('dinnerDetails').textContent = mealPlans[day].dinner || 'No meal added';
+        }
+
+        function addMeal(mealType) {
+            const meal = prompt(`Enter ${capitalize(mealType)} for ${capitalize(selectedDay)}:`);
+            if (meal) {
+                mealPlans[selectedDay][mealType] = meal;
+                loadMealPlan(selectedDay);
+            }
+        }
+
+        function generateShoppingList() {
+            const shoppingList = [];
+            for (const day in mealPlans) {
+                for (const mealType in mealPlans[day]) {
+                    if (mealPlans[day][mealType]) {
+                        shoppingList.push(mealPlans[day][mealType]);
+                    }
+                }
+            }
+            document.getElementById('shoppingList').innerHTML = shoppingList.map(item => `<li>${item}</li>`).join('');
+        }
+
+        function clearShoppingList() {
+            document.getElementById('shoppingList').innerHTML = '';
+        }
+
+        function applyTemplate(template) {
+            const templates = {
+                balanced: {
+                    monday: { breakfast: 'Oatmeal', lunch: 'Grilled Chicken Salad', dinner: 'Steak and Veggies' },
+                    tuesday: { breakfast: 'Smoothie Bowl', lunch: 'Chicken Wrap', dinner: 'Salmon and Quinoa' },
+                    // Add more days
+                },
+                vegetarian: {
+                    monday: { breakfast: 'Avocado Toast', lunch: 'Veggie Wrap', dinner: 'Lentil Soup' },
+                    // Add more days
+                },
+                // Add more templates
+            };
+            mealPlans = templates[template];
+            loadMealPlan(selectedDay);
+        }
+
+        function saveMealPlan() {
+            localStorage.setItem('mealPlans', JSON.stringify(mealPlans));
+            alert('Meal plan saved!');
+        }
+
+        function exportMealPlan() {
+            const doc = new jsPDF();
+            doc.text("Meal Plan", 10, 10);
+            Object.keys(mealPlans).forEach((day, index) => {
+                doc.text(`${capitalize(day)}:`, 10, (index + 2) * 10);
+                doc.text(`Breakfast: ${mealPlans[day].breakfast}`, 20, (index + 2) * 10 + 5);
+                doc.text(`Lunch: ${mealPlans[day].lunch}`, 20, (index + 2) * 10 + 10);
+                doc.text(`Dinner: ${mealPlans[day].dinner}`, 20, (index + 2) * 10 + 15);
+            });
+            doc.save('meal-plan.pdf');
+        }
+
+        function getAISuggestions() {
+            const suggestions = ['Omelette', 'Grilled Cheese', 'Caesar Salad', 'Tuna Wrap', 'Stir-fried Veggies'];
+            const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+            alert('AI suggests: ' + randomSuggestion);
+        }
+
+        function createCustomMealPlan() {
+            alert('Custom meal plan feature is under development.');
+        }
+
+        function submitRecipe(event) {
+            event.preventDefault();
+            const recipeName = document.getElementById('recipeName').value;
+            const recipeInstructions = document.getElementById('recipeInstructions').value;
+            alert(`Recipe Submitted: ${recipeName}\nInstructions: ${recipeInstructions}`);
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+    </script>
+</body>
+</html>

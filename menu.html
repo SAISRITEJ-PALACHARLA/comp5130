@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Recipe Sharing - Explore More</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <!-- Header with Advanced Features -->
+    <header>
+        <nav class="navbar">
+            <div id="leftNav" class="nav-left">
+                <img src="images/logo.jpg" alt="Logo" class="logo" onclick="location.href='index.html';">
+                <div class="nav-links">
+                    <h3 class="nav-item" onclick="location.href='menu.html';">Menu</h3>
+                    <h3 class="nav-item" onclick="location.href='mealplanning.html';">Meal Planning</h3>
+                </div>
+            </div>
+            <div id="rightNav" class="nav-right">
+                <h3 class="nav-item" onclick="location.href='login.html';">Sign In</h3>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Filter Section with Advanced Options -->
+    <section class="filter-section">
+        <h2>Filter by:</h2>
+        <select id="recipeTypeFilter" onchange="filterRecipes()">
+            <option value="all">All Recipes</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="non-vegetarian">Non-Vegetarian</option>
+            <option value="desserts">Desserts</option>
+        </select>
+        <select id="recipeSortFilter" onchange="sortRecipes()">
+            <option value="popular">Most Popular</option>
+            <option value="rating">Top Rated</option>
+            <option value="new">New</option>
+        </select>
+        <button class="clear-filters-btn" onclick="clearFilters()">Clear Filters</button>
+    </section>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" placeholder="Search Recipes..." id="searchBar" oninput="searchRecipes()">
+        <button class="voice-search-btn" onclick="startVoiceSearch()">🎙️ Voice Search</button>
+    </div>
+
+    <!-- Browse by Category with Animations -->
+    <section class="container" id="categories">
+        <h2 class="section-title">Browse by Category</h2>
+        <div class="category-grid">
+            <div class="category-card" onclick="filterByCategory('Desserts')">
+                <img src="images/desserts.jpg" alt="Desserts" class="category-image">
+                <h3 class="category-title">Desserts</h3>
+                <p class="category-tag">Trending</p>
+            </div>
+            <div class="category-card" onclick="filterByCategory('Vegetarian')">
+                <img src="images/vegetarian.jpg" alt="Vegetarian" class="category-image">
+                <h3 class="category-title">Vegetarian</h3>
+                <p class="category-tag">New</p>
+            </div>
+            <div class="category-card" onclick="filterByCategory('Meat')">
+                <img src="images/meat.jpg" alt="Meat" class="category-image">
+                <h3 class="category-title">Meat</h3>
+                <p class="category-tag">Top Rated</p>
+            </div>
+            <div class="category-card" onclick="filterByCategory('Seafood')">
+                <img src="images/seafood.jpg" alt="Seafood" class="category-image">
+                <h3 class="category-title">Seafood</h3>
+                <p class="category-tag">Chef's Pick</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Grid -->
+    <section class="container" id="recipes">
+        <h2 class="section-title">Top Recipes</h2>
+        <div class="recipe-grid">
+            <!-- Repeat this card structure for each recipe -->
+            <div class="recipe-card">
+                <img src="images/butter-chicken.jpg" alt="Butter Chicken">
+                <h3>Butter Chicken</h3>
+                <p><strong>Cooking Time:</strong> 40 mins</p>
+                <p><strong>Rating:</strong> ⭐⭐⭐⭐</p>
+                <button onclick="showRecipe('butterChicken')">View Recipe</button>
+            </div>
+            <div class="recipe-card">
+                <img src="images/pasta.jpg" alt="Pasta">
+                <h3>Italian Pasta</h3>
+                <p><strong>Cooking Time:</strong> 30 mins</p>
+                <p><strong>Rating:</strong> ⭐⭐⭐⭐⭐</p>
+                <button onclick="showRecipe('italianPasta')">View Recipe</button>
+            </div>
+            <div class="recipe-card">
+                <img src="images/salad.jpg" alt="Salad">
+                <h3>Fresh Salad</h3>
+                <p><strong>Cooking Time:</strong> 15 mins</p>
+                <p><strong>Rating:</strong> ⭐⭐⭐⭐</p>
+                <button onclick="showRecipe('freshSalad')">View Recipe</button>
+            </div>
+            <!-- Add more recipe cards dynamically -->
+        </div>
+    </section>
+
+    <!-- Popular Recipes Section -->
+    <section class="popular-recipes">
+        <h2>Most Loved Recipes</h2>
+        <div class="recipe-grid">
+            <div class="recipe-card">
+                <img src="images/pizza.jpg" alt="Pizza">
+                <h3>Homemade Pizza</h3>
+                <p><strong>Cooking Time:</strong> 45 mins</p>
+                <p><strong>Rating:</strong> ⭐⭐⭐⭐⭐</p>
+                <button onclick="showRecipe('homemadePizza')">View Recipe</button>
+            </div>
+            <div class="recipe-card">
+                <img src="images/sushi.jpg" alt="Sushi">
+                <h3>Sushi Rolls</h3>
+                <p><strong>Cooking Time:</strong> 60 mins</p>
+                <p><strong>Rating:</strong> ⭐⭐⭐⭐⭐</p>
+                <button onclick="showRecipe('sushiRolls')">View Recipe</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Ingredients Section -->
+    <section class="featured-ingredients">
+        <h2>Featured Ingredients</h2>
+        <div class="ingredient-grid">
+            <div class="ingredient-card" onclick="showIngredientInfo('tomato')">
+                <h3>Tomato</h3>
+                <img src="images/tomato.jpg" alt="Tomato">
+                <p>Rich in vitamins and great for salads!</p>
+            </div>
+            <div class="ingredient-card" onclick="showIngredientInfo('chicken')">
+                <h3>Chicken</h3>
+                <img src="images/chicken.jpg" alt="Chicken">
+                <p>Lean protein for healthy meals.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Rating Feature -->
+    <section class="recipe-rating">
+        <h2>Rate Your Recipes</h2>
+        <p>Help others by rating recipes!</p>
+        <div class="rating-card">
+            <h3>Rate Butter Chicken</h3>
+            <button onclick="rateRecipe('butterChicken', 1)">1 Star</button>
+            <button onclick="rateRecipe('butterChicken', 2)">2 Stars</button>
+            <button onclick="rateRecipe('butterChicken', 3)">3 Stars</button>
+            <button onclick="rateRecipe('butterChicken', 4)">4 Stars</button>
+            <button onclick="rateRecipe('butterChicken', 5)">5 Stars</button>
+        </div>
+    </section>
+
+    <!-- User Comments Section -->
+    <section class="user-comments">
+        <h2>User Comments</h2>
+        <div class="comment-card">
+            <h3>John Doe</h3>
+            <p>This butter chicken recipe is amazing! Will make it again.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Recipe Sharing. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script/menu.js"></script>
+</body>
+
+</html>

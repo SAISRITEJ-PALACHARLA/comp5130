@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <style>
+        h4 {
+            text-align: center;
+        }
+
+        form {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            color: black;
+            font-family: sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input,
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            color: black;
+            font-size: 16px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: red;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <h4>Add Product</h4>
+    <form>
+        
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Enter the product name" required>
+        <br>
+
+        <label for="type">Type:</label>
+        <input type="text" id="type" placeholder="Enter the product type" required>
+        <br>
+
+        <label for="image">Image URL:</label>
+        <input type="text" id="image" placeholder="Enter the product image URL" required>
+        <br>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" placeholder="Enter the product price" min="0" step="0.01" required>
+        <br>
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" placeholder="Enter the product category" required>
+        <br>
+
+        <label for="desc">Description:</label>
+        <textarea id="desc" placeholder="Enter the product description" required></textarea>
+        <br>
+
+        <button type="submit">Add Product</button>
+    </form>
+</body>
+
+<script>
+    let url = `https://awful-tuxedo-cow.cyclic.cloud`;
+
+    let form = document.querySelector("form");
+    let name = document.querySelector("#name");
+    let type = document.querySelector("#type");
+    let image = document.querySelector("#image");
+    let price = document.querySelector("#price");
+    let category = document.querySelector("#category");
+    let description = document.querySelector("#desc");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log("hi");
+        if (name.value == "" || type.value == "" || price.value == "" || image.value == "" || category.value == "" || description.value == "") {
+            alert("Fill all Credentials");
+        } else {
+            let obj = {
+                name: name.value,
+                type: type.value,
+                price: price.value,
+                image: image.value,
+                category: category.value,
+                description: description.value,
+            }
+            addToServer(obj);
+        }
+
+    })
+    async function addToServer(obj) {
+        try {
+            let req = await fetch(`${url}/recipes`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(obj)
+            })
+            console.log(req);
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+</script>
+
+</html>

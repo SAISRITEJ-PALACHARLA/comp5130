@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Sharing - Premium Recipes</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+
+    <!-- Scroll-to-Top Button -->
+    <button id="scrollToTopBtn" onclick="scrollToTop()">↑</button>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <img src="images/logo.jpg" alt="Logo" class="logo" onclick="location.href='index.html';">
+                <div class="nav-links">
+                    <button class="nav-item" onclick="location.href='index.html';">Home</button>
+                    <button class="nav-item" onclick="location.href='menu.html';">Menu</button>
+                    <button class="nav-item" onclick="location.href='mealplanning.html';">Meal Planning</button>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button class="nav-item" onclick="location.href='login.html';" id="signInBtn">Sign In</button>
+                <button class="nav-item" onclick="location.href='profile.html';" id="profileBtn">Profile</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Animations -->
+    <div class="hero-section" id="home">
+        <h1 class="hero-title">RECIPE KAVALA BRO  WECOMES YOU MY FRIENDS</h1>
+        <p class="hero-description">Discover over 50 premium recipes with detailed instructions, ingredients, and cooking tips.</p>
+        <button class="ai-suggestion-btn animated-button" onclick="getAISuggestions()">🧠 Get Recipe Suggestions</button>
+        <button class="live-cooking-btn animated-button" onclick="startLiveCooking()">🎥 Join Live Cooking</button>
+    </div>
+
+    <!-- Search Bar with Filters -->
+    <div class="search-bar">
+        <input type="text" placeholder="Search Recipes..." id="searchBar" class="search-input" oninput="searchRecipes()">
+        <button class="voice-search-btn animated-button" onclick="startVoiceSearch()">🎙️ Voice Search</button>
+        <div class="filter-options">
+            <select id="difficultyFilter">
+                <option value="">Difficulty</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+            <select id="timeFilter">
+                <option value="">Cooking Time</option>
+                <option value="30min">Under 30 mins</option>
+                <option value="60min">Under 1 hour</option>
+                <option value="over1hr">Over 1 hour</option>
+            </select>
+            <select id="caloriesFilter">
+                <option value="">Calories</option>
+                <option value="low">Low (under 300kcal)</option>
+                <option value="medium">Medium (300-600kcal)</option>
+                <option value="high">High (600+kcal)</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Gamified Cooking Mode -->
+    <div class="cooking-mode">
+        <h3>Start Cooking Mode:</h3>
+        <button onclick="startCookingMode('butterChicken')">Start Butter Chicken</button>
+        <button onclick="startCookingMode('paneerTikka')">Start Paneer Tikka</button>
+        <div id="cookingSteps" style="display: none;">
+            <h3 id="currentStep"></h3>
+            <button onclick="nextStep()">Next Step</button>
+        </div>
+    </div>
+
+    <!-- Browse by Category with Animations -->
+    <section class="container" id="categories">
+        <h2 class="section-title">Browse by Category</h2>
+        <div class="category-grid">
+            <!-- Desserts Category -->
+            <div class="category-card" onclick="toggleCategory('desserts')">
+                <h3 class="category-title">Desserts</h3>
+            </div>
+            <div id="desserts" class="category-items" style="display:none;">
+                <div class="recipe-card">
+                    <h4>Chocolate Cake</h4>
+                    <p><strong>Ingredients:</strong></p>
+                    <ul>
+                        <li>2 cups all-purpose flour</li>
+                        <li>1 cup sugar</li>
+                        <li>1/2 cup cocoa powder</li>
+                        <li>2 eggs</li>
+                        <li>1/2 cup butter</li>
+                        <li>1 tsp vanilla extract</li>
+                    </ul>
+                    <p><strong>Cooking Time:</strong> 45 minutes</p>
+                    <p><strong>Instructions:</strong> Preheat the oven to 350°F. Mix dry ingredients. Add wet ingredients. Pour into a greased pan and bake for 30-35 minutes. Let it cool and enjoy!</p>
+                    <button class="view-recipe-btn">View Full Recipe</button>
+                </div>
+                <div class="recipe-card">
+                    <h4>Ice Cream</h4>
+                    <p><strong>Ingredients:</strong></p>
+                    <ul>
+                        <li>2 cups heavy cream</li>
+                        <li>1 cup milk</li>
+                        <li>3/4 cup sugar</li>
+                        <li>1 tsp vanilla extract</li>
+                    </ul>
+                    <p><strong>Cooking Time:</strong> 3 hours (including freezing time)</p>
+                    <p><strong>Instructions:</strong> Whisk the cream, milk, and sugar together. Pour into an ice cream maker and churn for 30 minutes. Freeze for 2-3 hours before serving.</p>
+                    <button class="view-recipe-btn">View Full Recipe</button>
+                </div>
+            </div>
+            <!-- Vegetarian Category -->
+            <div class="category-card" onclick="toggleCategory('vegetarian')">
+                <h3 class="category-title">Vegetarian</h3>
+            </div>
+            <div id="vegetarian" class="category-items" style="display:none;">
+                <div class="recipe-card">
+                    <h4>Paneer Tikka</h4>
+                    <p><strong>Ingredients:</strong></p>
+                    <ul>
+                        <li>250g paneer (cubed)</li>
+                        <li>2 tbsp yogurt</li>
+                        <li>1 tbsp ginger garlic paste</li>
+                        <li>Spices: coriander, cumin, chili powder</li>
+                        <li>1 tbsp lemon juice</li>
+                    </ul>
+                    <p><strong>Cooking Time:</strong> 30 minutes</p>
+                    <p><strong>Instructions:</strong> Marinate paneer in yogurt, spices, and lemon juice. Skewer the paneer and grill until golden brown. Serve with chutney or naan.</p>
+                    <button class="view-recipe-btn">View Full Recipe</button>
+                </div>
+                <div class="recipe-card">
+                    <h4>Vegetable Curry</h4>
+                    <p><strong>Ingredients:</strong></p>
+                    <ul>
+                        <li>2 potatoes (cubed)</li>
+                        <li>1 cup peas</li>
+                        <li>1 onion (chopped)</li>
+                        <li>2 tomatoes (pureed)</li>
+                        <li>Spices: cumin, turmeric, chili powder</li>
+                    </ul>
+                    <p><strong>Cooking Time:</strong> 25 minutes</p>
+                    <p><strong>Instructions:</strong> Fry onions and cumin. Add tomatoes and spices, and cook until the sauce thickens. Add vegetables and simmer for 15 minutes. Serve hot with rice.</p>
+                    <button class="view-recipe-btn">View Full Recipe</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Interactive Recipe Cards with 3D Flip Effect -->
+    <section class="container" id="recipes">
+        <h2 class="section-title">Popular Recipes</h2>
+        <div class="recipe-grid">
+            <div class="recipe-card flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="/images/butter-chicken.jpg" alt="Butter Chicken">
+                        <h3>Butter Chicken</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p><strong>Cooking Time:</strong> 40 mins</p>
+                        <p><strong>Calories:</strong> 500 kcal</p>
+                        <p><strong>Rating:</strong> ⭐⭐⭐⭐</p>
+                        <button onclick="showRecipe('butterChicken')">View Full Recipe</button>
+                        <button class="bookmark-btn" onclick="bookmarkRecipe('butterChicken')">🔖 Bookmark</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recipe-card flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="/images/paneer-tikka.jpg" alt="Paneer Tikka">
+                        <h3>Paneer Tikka</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p><strong>Cooking Time:</strong> 30 mins</p>
+                        <p><strong>Calories:</strong> 400 kcal</p>
+                        <p><strong>Rating:</strong> ⭐⭐⭐⭐</p>
+                        <button onclick="showRecipe('paneerTikka')">View Full Recipe</button>
+                        <button class="bookmark-btn" onclick="bookmarkRecipe('paneerTikka')">🔖 Bookmark</button>
+                    </div>
+                </div>
+            </div>
+            <!-- More 3D Flip Recipe Cards -->
+        </div>
+    </section>
+
+    <!-- Expanded Recipe Display (hidden initially) -->
+    <div id="fullRecipe" style="display: none;">
+        <h2 id="recipeTitle"></h2>
+        <p><strong>Ingredients:</strong></p>
+        <ul id="recipeIngredients"></ul>
+        <p><strong>Steps:</strong></p>
+        <ol id="recipeSteps"></ol>
+    </div>
+
+    <!-- Latest Recipes Section -->
+    <section class="container" id="latestRecipes">
+        <h2 class="section-title">Latest Recipes</h2>
+        <div class="latest-recipe-grid">
+            <!-- Add latest recipes dynamically -->
+        </div>
+    </section>
+
+    <!-- Newsletter Subscription Section -->
+    <section class="newsletter">
+        <h2>Subscribe to Our Newsletter</h2>
+        <p>Get the latest recipes delivered straight to your inbox!</p>
+        <input type="email" placeholder="Enter your email..." class="newsletter-input">
+        <button class="subscribe-btn">Subscribe</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Recipe Sharing. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script/login.js"></script>
+    <script src="script/signup.js"></script>
+    <script>
+        // Scroll to top button
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+        window.onscroll = function () {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopBtn.style.display = "block";
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        };
+
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        darkModeToggle.addEventListener("click", function () {
+            document.body.classList.toggle("dark-mode");
+        });
+
+        // AI Recipe Suggestions
+        function getAISuggestions() {
+            const suggestions = ['Spaghetti Carbonara', 'Vegan Buddha Bowl', 'Chicken Tikka Masala', 'Chocolate Lava Cake'];
+            const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+            alert('AI suggests: ' + randomSuggestion);
+        }
+
+        // Show Recipe Function
+        const recipes = {
+            butterChicken: {
+                title: "Butter Chicken",
+                ingredients: ["500g boneless chicken", "2 tbsp butter", "1 cup tomato puree", "1/2 cup cream", "1 tbsp ginger garlic paste", "Spices (garam masala, chili powder)"],
+                steps: ["Marinate chicken in yogurt, spices for 30 minutes.", "Cook chicken until golden brown.", "Prepare sauce using butter, tomato puree, and spices.", "Mix chicken with the sauce and simmer for 10-15 minutes.", "Add cream and serve hot with naan or rice."]
+            },
+            paneerTikka: {
+                title: "Paneer Tikka",
+                ingredients: ["250g paneer (cubed)", "2 tbsp yogurt", "1 tbsp ginger garlic paste", "Spices (coriander powder, cumin, chili powder)", "1 tbsp lemon juice"],
+                steps: ["Marinate paneer in yogurt, spices for 20 minutes.", "Skewer paneer and grill until golden brown.", "Serve with chutney or naan."]
+            }
+        };
+
+        function showRecipe(recipeId) {
+            const recipe = recipes[recipeId];
+            document.getElementById('recipeTitle').innerText = recipe.title;
+            document.getElementById('recipeIngredients').innerHTML = recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
+            document.getElementById('recipeSteps').innerHTML = recipe.steps.map(step => `<li>${step}</li>`).join('');
+            document.getElementById('fullRecipe').style.display = 'block';
+        }
+
+        // Bookmarking Recipes
+        function bookmarkRecipe(recipeId) {
+            const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+            if (!bookmarks.includes(recipeId)) {
+                bookmarks.push(recipeId);
+                localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+                alert('Recipe bookmarked!');
+            } else {
+                alert('Recipe already bookmarked!');
+            }
+        }
+
+        // Load More Recipes
+        function loadMoreRecipes() {
+            alert('Loading more recipes...');
+        }
+
+        // Cooking Mode Logic
+        let currentStepIndex = 0;
+        const steps = [];
+
+        function startCookingMode(recipeId) {
+            const recipe = recipes[recipeId];
+            steps.length = 0;
+            steps.push(...recipe.steps);
+            document.getElementById('cookingSteps').style.display = 'block';
+            currentStepIndex = 0;
+            showCurrentStep();
+        }
+
+        function showCurrentStep() {
+            if (currentStepIndex < steps.length) {
+                document.getElementById('currentStep').innerText = steps[currentStepIndex];
+            } else {
+                alert("Cooking complete!");
+                document.getElementById('cookingSteps').style.display = 'none';
+            }
+        }
+
+        function nextStep() {
+            currentStepIndex++;
+            showCurrentStep();
+        }
+
+        // Voice Search Logic
+        function startVoiceSearch() {
+            alert("Voice Search is under development!");
+        }
+
+        // Live Cooking Session
+        function startLiveCooking() {
+            alert("Join our live cooking session coming soon!");
+        }
+    </script>
+</body>
+
+</html>

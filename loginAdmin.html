@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Recipe Kavala Babu Admin</title>
+    <link rel="icon" type="image/x-icon" href="images/bfccc.jpg">
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5af19, #f12711);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav img {
+            width: 100px;
+        }
+
+        #startorder {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #startorder:hover {
+            background-color: #218838;
+        }
+
+        /* Login Form */
+        #container1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        #box1 {
+            display: none;
+        }
+
+        #box2 {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        #box2_1 {
+            text-align: center;
+        }
+
+        #box2_1 input[type="email"],
+        #box2_1 input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #submitbutton {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 95%;
+        }
+
+        #submitbutton:hover {
+            background-color: #218838;
+        }
+
+        #forget {
+            float: right;
+            font-size: 0.8em;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        #forget:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer img {
+            width: 120px;
+            margin: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav img {
+                width: 80px;
+            }
+
+            #box2 {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div id="mobile_nav">
+            <a href="index.html"><img src="images/bfccc.jpg" alt="Recipe Kavala"></a>
+            <a href="cart.html"><i class="fas fa-shopping-bag fa-1x"></i></a>
+        </div>
+        <nav>
+            <div class="box15">
+                <a href="index.html"><img class="img_align" src="images/bfccc.jpg" alt="Logo"></a>
+            </div>
+            <div class="box25">
+                <button id="startorder" onclick="homePage()" class="btn-class">Start Order</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Login Section -->
+    <div id="container1">
+        <div id="box2">
+            <div id="box2_1">
+                <h2>Admin Login</h2>
+                <form action="" onsubmit="return validateForm()">
+                    <input id="email" type="email" placeholder="Email" required>
+                    <input id="password" type="password" placeholder="Password" required>
+                    <span id="forget" onclick="forgotPassword()">Forgot Password?</span>
+                    <br>
+                    <input type="submit" id="submitbutton" value="Admin Log In">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div id="Tfooter">
+            <div id="linksF">
+                <div class="linkCard">
+                    <a href="">About Us</a>
+                    <a href="menu.html">Menu</a>
+                    <a href="">Order Lookup</a>
+                    <a href="">Gift Card</a>
+                    <a href="">Nutrition & Allergen</a>
+                </div>
+                <div class="linkCard">
+                    <a href="">Support</a>
+                    <a href="">Contact Us</a>
+                    <a href="">Feedback</a>
+                    <a href="">Privacy Policy</a>
+                </div>
+            </div>
+            <div id="app">
+                <img src="images/playstore.jpg" alt="Play Store">
+                <img src="images/appstore.jpg" alt="App Store">
+            </div>
+        </div>
+        <div id="Dfooter">
+            <p>&copy; 2024 Recipe Kavala Babu. All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function validateForm() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            if (email == "" || password == "") {
+                alert("Both fields must be filled out.");
+                return false;
+            }
+            return true;
+        }
+
+        function forgotPassword() {
+            alert("Redirect to password recovery page.");
+        }
+
+        function homePage() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+
+</html>
